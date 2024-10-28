@@ -1,0 +1,10 @@
+format_version = 2
+
+[apps.example_glfw_metal]
+identifier = 'foundation.wabi.example_glfw_metal'
+product = 'example_glfw_metal'
+version = '1.0.0'
+category = 'public.app-category.graphics-design'
+
+[apps.example_glfw_metal.plist]
+commit = '$(COMMIT_HASH)'
