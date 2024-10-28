@@ -101,10 +101,7 @@ let package = Package(
       sources: [
         "imgui_impl_metal.mm"
       ],
-      publicHeadersPath: ".",
-      linkerSettings: [
-        
-      ]
+      publicHeadersPath: "."
     ),
 
     .target(
@@ -122,7 +119,7 @@ let package = Package(
       dependencies: [
         .target(name: "imgui_cxx"),
         .target(name: "backend_glfw"),
-        .target(name: "backend_metal")
+        .target(name: "backend_metal", condition: .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
       ],
       path: "imgui-cxx/examples/example_glfw_metal"
     ),
