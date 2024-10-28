@@ -1,6 +1,13 @@
-import Testing
-@testable import ImGui
+// SPDX-License-Identifier: Zlib
+// Copyright Contributors to the Zlib project
 
-@Test func example() async throws {
-    // Write your test here and use APIs like `#expect(...)` to check expected conditions.
+@testable import ImGui
+import XCTest
+
+class ImGuiTests: XCTestCase
+{
+  func testImGui() throws
+  {
+    print("test me.")
+  }
 }
