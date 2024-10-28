@@ -29,15 +29,7 @@ let package = Package(
       name: "backend_glfw",
       targets: ["backend_glfw"]
     ),
-    .library(
-      name: "backend_metal",
-      targets: ["backend_metal"]
-    ),
-    .executable(
-      name: "example_glfw_metal",
-      targets: ["example_glfw_metal"]
-    ),
-  ],
+  ] + Arch.addPlatformProducts(),
   targets: [
     .target(
       name: "imgui_cxx",
@@ -60,11 +52,12 @@ let package = Package(
         "src"
       ],
       cxxSettings: [
-        .define("_GLFW_COCOA", to: "1", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .define(
+          "_GLFW_COCOA", to: "1", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
         .define("_GLFW_X11", to: "1", .when(platforms: [.linux, .android, .openbsd])),
         .define("_GLFW_WIN32", to: "1", .when(platforms: [.windows])),
         .define("GL_SILENCE_DEPRECATION", to: "1"),
-        .unsafeFlags(["-fno-objc-arc"]) // TODO: remove.
+        .unsafeFlags(["-fno-objc-arc"]),  // TODO: remove.
       ],
       linkerSettings: [
         .linkedLibrary("opengl32", .when(platforms: [.windows])),
@@ -76,7 +69,8 @@ let package = Package(
         .linkedLibrary("Xt", .when(platforms: [.linux, .android, .openbsd])),
         .linkedFramework("Cocoa", .when(platforms: [.macOS])),
         .linkedFramework("GLUT", .when(platforms: [.macOS])),
-        .linkedFramework("GameController", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .linkedFramework(
+          "GameController", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
       ]
     ),
 
@@ -84,22 +78,11 @@ let package = Package(
       name: "backend_glfw",
       dependencies: [
         .target(name: "glfw"),
-        .target(name: "imgui_cxx")
+        .target(name: "imgui_cxx"),
       ],
       path: "imgui-cxx/backends",
       sources: [
         "imgui_impl_glfw.cpp"
-      ],
-      publicHeadersPath: "."
-    ),
-    .target(
-      name: "backend_metal",
-      dependencies: [
-        .target(name: "imgui_cxx")
-      ],
-      path: "imgui-cxx/backends",
-      sources: [
-        "imgui_impl_metal.mm"
       ],
       publicHeadersPath: "."
     ),
@@ -114,16 +97,6 @@ let package = Package(
       ]
     ),
 
-    .executableTarget(
-      name: "example_glfw_metal",
-      dependencies: [
-        .target(name: "imgui_cxx"),
-        .target(name: "backend_glfw"),
-        .target(name: "backend_metal", condition: .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
-      ],
-      path: "imgui-cxx/examples/example_glfw_metal"
-    ),
-
     .testTarget(
       name: "ImGuiTests",
       dependencies: ["ImGui"],
@@ -131,7 +104,7 @@ let package = Package(
         .interoperabilityMode(.Cxx)
       ]
     ),
-  ],
+  ] + Arch.addPlatformExamples(),
   cxxLanguageStandard: .cxx17
 )
 
@@ -143,7 +116,7 @@ enum Arch {
       "src/wl_monitor.c",
       "src/glfw.rc.in",
       "src/CMakeLists.txt",
-      "src/mappings.h.in"
+      "src/mappings.h.in",
     ]
     #if !os(Windows)
       excludes += [
@@ -184,5 +157,58 @@ enum Arch {
     #endif /* !os(Linux) && !os(Android) && !os(OpenBSD) && !os(FreeBSD) */
 
     return excludes
+  }
+
+  static func addPlatformProducts() -> [Product] {
+    #if os(macOS)
+      [
+        .library(
+          name: "backend_metal",
+          targets: ["backend_metal"]
+        ),
+        .executable(
+          name: "example_glfw_metal",
+          targets: ["example_glfw_metal"]
+        ),
+      ]
+    #else
+      [
+        // todo.
+      ]
+    #endif
+  }
+
+  static func addPlatformExamples() -> [Target] {
+    #if os(macOS)
+      [
+        .target(
+          name: "backend_metal",
+          dependencies: [
+            .target(name: "imgui_cxx")
+          ],
+          path: "imgui-cxx/backends",
+          sources: [
+            "imgui_impl_metal.mm"
+          ],
+          publicHeadersPath: "."
+        ),
+
+        .executableTarget(
+          name: "example_glfw_metal",
+          dependencies: [
+            .target(name: "imgui_cxx"),
+            .target(name: "backend_glfw"),
+            .target(
+              name: "backend_metal",
+              condition: .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+          ],
+          path: "imgui-cxx/examples/example_glfw_metal"
+        ),
+      ]
+    #else
+      [
+        // todo.
+      ]
+    #endif
   }
 }
