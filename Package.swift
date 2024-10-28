@@ -64,7 +64,7 @@ let package = Package(
         .define("_GLFW_X11", to: "1", .when(platforms: [.linux, .android, .openbsd])),
         .define("_GLFW_WIN32", to: "1", .when(platforms: [.windows])),
         .define("GL_SILENCE_DEPRECATION", to: "1"),
-        .unsafeFlags(["-fno-objc-arc"])
+        .unsafeFlags(["-fno-objc-arc"]) // TODO: remove.
       ],
       linkerSettings: [
         .linkedLibrary("opengl32", .when(platforms: [.windows])),
