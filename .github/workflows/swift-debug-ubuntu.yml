@@ -17,5 +17,9 @@ jobs:
       - uses: actions/checkout@v4
       - name: 🐙 Fetch Git Submodules
         run: git submodule update --init --recursive
+      - name: 🖼 Install FreeGLUT
+        run: sudo apt install freeglut3-dev
+      - name: 🖥️ Install X11
+        run: sudo apt install libxcursor-dev libxt-dev libxi-dev libxinerama-dev libxrandr-dev
       - name: 🧪 Test
         run: swift test
