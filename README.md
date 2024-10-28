@@ -65,7 +65,7 @@ dependencies: [
 
 ##### Then, for any target you'd like, add the imgui product as a target dependency, a complete example.
 ```swift
-// swift-tools-version: 6.0
+// swift-tools-version: 5.10
 import PackageDescription
 
 let package = Package(
