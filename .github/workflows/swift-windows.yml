@@ -16,7 +16,12 @@ jobs:
           branch: swift-5.10-release
           tag: 5.10-RELEASE
       - uses: actions/checkout@v4
-      - name: 🔥 Upgrade MSVC for a working STL.
+      - name: 💀 Install winget
+        shell: pwsh
+        run: |
+          Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.appxbundle
+          Add-AppxPackage Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.appxbundle
+      - name: 🔥 Upgrade MSVC for a working STL
         shell: pwsh
         run: winget upgrade --all --accept-source-agreements --accept-package-agreements
       - name: 🐙 Fetch Git Submodules
