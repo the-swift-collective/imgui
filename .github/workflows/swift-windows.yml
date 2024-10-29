@@ -16,6 +16,9 @@ jobs:
           branch: swift-5.10-release
           tag: 5.10-RELEASE
       - uses: actions/checkout@v4
+      - name: 🔥 Upgrade MSVC for a working STL.
+        shell: pwsh
+        run: winget upgrade --all --accept-source-agreements --accept-package-agreements
       - name: 🐙 Fetch Git Submodules
         run: git submodule update --init --recursive
       - name: 📦 Build
