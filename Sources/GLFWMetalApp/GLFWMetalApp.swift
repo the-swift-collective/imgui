@@ -11,14 +11,14 @@ public struct GLFWMetalApp
 
     // setup context.
 
-    ImGui.CreateContext()
+    ImGui.CreateContext(nil)
     var io = ImGui.GetIO().pointee
     io.ConfigFlags |= Int32(ImGuiConfigFlags_NavEnableKeyboard.rawValue)
     io.ConfigFlags |= Int32(ImGuiConfigFlags_NavEnableGamepad.rawValue)
 
     // setup style & font.
 
-    ImGui.StyleColorsDark()
+    ImGui.StyleColorsDark(nil)
 
     guard let ttfFile = Bundle.main.path(forResource: "fonts/default.ttf", ofType: nil)
     else { fatalError("could not find default font.") }
