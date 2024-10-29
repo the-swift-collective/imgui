@@ -45,7 +45,7 @@ cd imgui
 
 swift bundler run
 ```
-> should launch 'example_glfw_metal.app'.
+> should launch 'GLFWMetalApp.app'.
 
 <br/>
 
