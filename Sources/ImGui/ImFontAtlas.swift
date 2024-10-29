@@ -7,7 +7,7 @@ extension UnsafeMutablePointer<ImFontAtlas> {
 
 extension ImFontAtlas {
   private mutating func AddFontFromFileTTFCopy(atPath filepath: String, fontSize: Float) -> ImFont {
-    __AddFontFromFileTTFUnsafe(filepath, fontSize).pointee
+    __AddFontFromFileTTFUnsafe(filepath, fontSize, nil, nil).pointee
   }
 
   public mutating func addFontFromFileTTF(atPath filepath: String, fontSize: Float) -> ImFont {
