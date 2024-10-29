@@ -51,7 +51,8 @@ let package = Package(
       ],
       publicHeadersPath: ".",
       cxxSettings: [
-        .define("IMGUI_ENABLE_FREETYPE", to: "1")
+        .define("IMGUI_ENABLE_FREETYPE", to: "1"),
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
       ]
     ),
 
@@ -68,6 +69,7 @@ let package = Package(
         .define("_GLFW_X11", to: "1", .when(platforms: [.linux, .android, .openbsd])),
         .define("_GLFW_WIN32", to: "1", .when(platforms: [.windows])),
         .define("GL_SILENCE_DEPRECATION", to: "1"),
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
         .unsafeFlags(["-fno-objc-arc"]),  // TODO: remove.
       ],
       linkerSettings: [
@@ -252,7 +254,8 @@ let package = Package(
       publicHeadersPath: "include",
       cSettings: [
         .headerSearchPath("src"),
-        .define("FT_USE_AUTOFIT", to: "1")
+        .define("FT_USE_AUTOFIT", to: "1"),
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
       ]
     ),
 
@@ -266,7 +269,10 @@ let package = Package(
       sources: [
         "imgui_impl_glfw.cpp"
       ],
-      publicHeadersPath: "."
+      publicHeadersPath: ".",
+      cxxSettings: [
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
+      ]
     ),
 
     .target(
@@ -284,7 +290,8 @@ let package = Package(
       ],
       publicHeadersPath: ".",
       cxxSettings: [
-        .headerSearchPath("misc/freetype")
+        .headerSearchPath("misc/freetype"),
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
       ]
     ),
 
@@ -296,6 +303,7 @@ let package = Package(
       ],
       cxxSettings: [
         .define("IMGUI_ENABLE_FREETYPE", to: "1"),
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
       ],
       swiftSettings: [
         .interoperabilityMode(.Cxx)
@@ -307,6 +315,7 @@ let package = Package(
       dependencies: ["ImGui"],
       cxxSettings: [
         .define("IMGUI_ENABLE_FREETYPE", to: "1"),
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
       ],
       swiftSettings: [
         .interoperabilityMode(.Cxx)
