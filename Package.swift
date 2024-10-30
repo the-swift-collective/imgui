@@ -53,7 +53,8 @@ let package = Package(
       cxxSettings: [
         .define("IMGUI_ENABLE_FREETYPE", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
-        .define("static_assert(_conditional, _message)", to: ";", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, _message)", to: "", .when(platforms: [.windows])),
       ]
     ),
 
@@ -71,7 +72,8 @@ let package = Package(
         .define("_GLFW_WIN32", to: "1", .when(platforms: [.windows])),
         .define("GL_SILENCE_DEPRECATION", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
-        .define("static_assert(_conditional, _message)", to: ";", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, _message)", to: "", .when(platforms: [.windows])),
         .unsafeFlags(["-fno-objc-arc"]),  // TODO: remove.
       ],
       linkerSettings: [
@@ -258,7 +260,8 @@ let package = Package(
         .headerSearchPath("src"),
         .define("FT_USE_AUTOFIT", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
-        .define("static_assert(_conditional, _message)", to: ";", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, _message)", to: "", .when(platforms: [.windows])),
       ]
     ),
 
@@ -275,7 +278,8 @@ let package = Package(
       publicHeadersPath: ".",
       cxxSettings: [
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
-        .define("static_assert(_conditional, _message)", to: ";", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, _message)", to: "", .when(platforms: [.windows])),
       ]
     ),
 
@@ -296,7 +300,8 @@ let package = Package(
       cxxSettings: [
         .headerSearchPath("misc/freetype"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
-        .define("static_assert(_conditional, _message)", to: ";", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, _message)", to: "", .when(platforms: [.windows])),
       ]
     ),
 
@@ -309,7 +314,8 @@ let package = Package(
       cxxSettings: [
         .define("IMGUI_ENABLE_FREETYPE", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
-        .define("static_assert(_conditional, _message)", to: ";", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, _message)", to: "", .when(platforms: [.windows])),
       ],
       swiftSettings: [
         .interoperabilityMode(.Cxx)
@@ -322,7 +328,8 @@ let package = Package(
       cxxSettings: [
         .define("IMGUI_ENABLE_FREETYPE", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
-        .define("static_assert(_conditional, _message)", to: ";", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, _message)", to: "", .when(platforms: [.windows])),
       ],
       swiftSettings: [
         .interoperabilityMode(.Cxx)
