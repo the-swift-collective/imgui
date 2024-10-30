@@ -1,9 +1,9 @@
-[submodule "glfw"]
-	path = glfw
-	url = https://github.com/glfw/glfw.git
 [submodule "freetype"]
 	path = freetype
 	url = https://github.com/the-swift-collective/freetype.git
+[submodule "glfw"]
+	path = glfw
+	url = https://github.com/the-swift-collective/glfw.git
 [submodule "imgui-cxx"]
 	path = imgui-cxx
 	url = https://github.com/the-swift-collective/imgui-cxx.git

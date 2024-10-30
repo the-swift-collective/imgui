@@ -27,7 +27,7 @@ public struct GLFWMetalApp
 
     // setup window, graphics context, & run event loop.
 
-    if run_example(io) == .failure {
+    if run_example() == .failure {
       fatalError("something terrible happened.")
     }
 
