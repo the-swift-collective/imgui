@@ -85,9 +85,21 @@ let package = Package(
       dependencies: [
         /* add the imgui product as a library dependency. */
         .product(name: "ImGui", package: "imgui"),
+      ],
+      cxxSettings: [
+        /* for windows, add the following until swift updates its embedded clang. */
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, ...)", to: "", .when(platforms: [.windows])),
+      ]
+      swiftSettings: [
+        /* enable swift/c++ interop. */
+        .interoperabilityMode(.Cxx),
       ]
     ),
-  ]
+  ],
+  /* use cxx17 language standard. */
+  cxxLanguageStandard: .cxx17
 )
 ```
 
