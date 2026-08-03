@@ -42,6 +42,9 @@ let package = Package(
       targets: ["imgui_freetype"]
     ),
   ] + Arch.addPlatformProducts(),
+  dependencies: [
+    .package(url: "https://github.com/the-swift-collective/zlib.git", from: "1.3.2")
+  ],
   targets: [
     .target(
       name: "imgui_cxx",
@@ -113,6 +116,9 @@ let package = Package(
 
     .target(
       name: "freetype",
+      dependencies: [
+        .product(name: "ZLib", package: "zlib")
+      ],
       path: "freetype",
       exclude: [
         "builds",
@@ -178,6 +184,12 @@ let package = Package(
         "src/autofit/afblue.dat",
         "src/autofit/afblue.cin",
         "src/gzip/README.freetype",
+        "src/gzip/adler32.c",
+        "src/gzip/crc32.c",
+        "src/gzip/inffast.c",
+        "src/gzip/inflate.c",
+        "src/gzip/inftrees.c",
+        "src/gzip/zutil.c",
         "src/autofit/afblue.c",
         "src/autofit/afcjk.c",
         "src/autofit/afdummy.c",
@@ -273,12 +285,14 @@ let package = Package(
         "src/gxvalid/gxvfgen.c"
       ],
       sources: [
-        "src"
+        "src",
+        "src/gzip/ftgzip.c",
       ],
       publicHeadersPath: "include",
       cSettings: [
         .headerSearchPath("src"),
         .define("FT_USE_AUTOFIT", to: "1"),
+        .define("FT_CONFIG_OPTION_USE_ZLIB", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
         .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
         .define("static_assert(_conditional, ...)", to: "", .when(platforms: [.windows])),
