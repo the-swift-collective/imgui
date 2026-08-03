@@ -90,9 +90,10 @@ let package = Package(
         "src"
       ],
       cxxSettings: [
-        .define(
-          "_GLFW_COCOA", to: "1", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
-        .define("_GLFW_X11", to: "1", .when(platforms: [.linux, .android, .openbsd])),
+        .headerSearchPath("."),
+        .define("_GLFW_COCOA", to: "1", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .define("_GLFW_X11", to: "1", .when(platforms: [.linux, .openbsd])),
+        .define("_GLFW_OSMESA", to: "1", .when(platforms: [.android])),
         .define("_GLFW_WIN32", to: "1", .when(platforms: [.windows])),
         .define("GL_SILENCE_DEPRECATION", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
@@ -109,8 +110,7 @@ let package = Package(
         .linkedLibrary("Xt", .when(platforms: [.linux, .android, .openbsd])),
         .linkedFramework("Cocoa", .when(platforms: [.macOS])),
         .linkedFramework("GLUT", .when(platforms: [.macOS])),
-        .linkedFramework(
-          "GameController", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .linkedFramework("GameController", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
       ]
     ),
 
@@ -120,173 +120,55 @@ let package = Package(
         .product(name: "ZLib", package: "zlib")
       ],
       path: "freetype",
-      exclude: [
-        "builds",
-        "devel",
-        "docs",
-        "objs",
-        "subprojects",
-        "tests",
-        "src/svg/module.mk",
-        "src/svg/rules.mk",
-        "src/pcf/module.mk",
-        "src/pcf/rules.mk",
-        "src/type1/module.mk",
-        "src/type1/rules.mk",
-        "src/dlg/rules.mk",
-        "src/sdf/module.mk",
-        "src/sdf/rules.mk",
-        "src/cache/rules.mk",
-        "src/sfnt/module.mk",
-        "src/sfnt/rules.mk",
-        "src/winfonts/module.mk",
-        "src/winfonts/rules.mk",
-        "src/bdf/module.mk",
-        "src/bdf/rules.mk",
-        "src/smooth/module.mk",
-        "src/smooth/rules.mk",
-        "src/type42/module.mk",
-        "src/type42/rules.mk",
-        "src/cff/module.mk",
-        "src/cff/rules.mk",
-        "src/gzip/rules.mk",
-        "src/lzw/rules.mk",
-        "src/gxvalid/module.mk",
-        "src/gxvalid/rules.mk",
-        "src/psaux/module.mk",
-        "src/psaux/rules.mk",
-        "src/cid/module.mk",
-        "src/cid/rules.mk",
-        "src/pfr/module.mk",
-        "src/pfr/rules.mk",
-        "src/otvalid/module.mk",
-        "src/otvalid/rules.mk",
-        "src/autofit/module.mk",
-        "src/autofit/rules.mk",
-        "src/pshinter/module.mk",
-        "src/pshinter/rules.mk",
-        "src/truetype/module.mk",
-        "src/truetype/rules.mk",
-        "src/raster/module.mk",
-        "src/raster/rules.mk",
-        "src/psnames/module.mk",
-        "src/psnames/rules.mk",
-        "src/base/rules.mk",
-        "src/bzip2/rules.mk",
-        "src/tools",
-        "src/pcf/README",
-        "src/tools/ftrandom/README",
-        "src/bdf/README",
-        "src/gxvalid/README",
-        "src/gzip/patches/freetype-zlib.diff",
-        "src/base/ftver.rc",
-        "src/autofit/afblue.hin",
-        "src/autofit/afblue.dat",
-        "src/autofit/afblue.cin",
-        "src/gzip/README.freetype",
-        "src/gzip/adler32.c",
-        "src/gzip/crc32.c",
-        "src/gzip/inffast.c",
-        "src/gzip/inflate.c",
-        "src/gzip/inftrees.c",
-        "src/gzip/zutil.c",
-        "src/autofit/afblue.c",
-        "src/autofit/afcjk.c",
-        "src/autofit/afdummy.c",
-        "src/autofit/afglobal.c",
-        "src/autofit/afhints.c",
-        "src/autofit/afindic.c",
-        "src/autofit/aflatin.c",
-        "src/autofit/afloader.c",
-        "src/autofit/afmodule.c",
-        "src/autofit/afranges.c",
-        "src/autofit/afshaper.c",
-        "src/base/ftadvanc.c",
+      sources: [
+        "src/base/ftsystem.c",
+        "src/base/ftinit.c",
+        "src/base/ftdebug.c",
+        "src/base/ftbase.c",
+        "src/base/ftbbox.c",
+        "src/base/ftglyph.c",
         "src/base/ftbdf.c",
+        "src/base/ftbitmap.c",
         "src/base/ftcid.c",
         "src/base/ftfstype.c",
         "src/base/ftgasp.c",
         "src/base/ftgxval.c",
+        "src/base/ftmm.c",
         "src/base/ftotval.c",
         "src/base/ftpatent.c",
         "src/base/ftpfr.c",
         "src/base/ftstroke.c",
+        "src/base/ftsynth.c",
         "src/base/fttype1.c",
         "src/base/ftwinfnt.c",
-        "src/base/ftcalc.c",
-        "src/base/ftcolor.c",
-        "src/base/ftdbgmem.c",
-        "src/base/fterrors.c",
-        "src/base/ftfntfmt.c",
-        "src/base/ftgloadr.c",
-        "src/base/fthash.c",
-        "src/base/ftlcdfil.c",
-        "src/base/ftmac.c",
-        "src/base/ftobjs.c",
-        "src/base/ftoutln.c",
-        "src/base/ftpsprop.c",
-        "src/base/ftrfork.c",
-        "src/base/ftsnames.c",
-        "src/base/ftstream.c",
-        "src/base/fttrigon.c",
-        "src/base/ftutil.c",
-        "src/sdf/ftsdfrend.c",
-        "src/sdf/ftsdfcommon.c",
-        "src/sdf/ftbsdf.c",
-        "src/sdf/ftsdf.c",
-        "src/smooth/ftgrays.c",
-        "src/smooth/ftsmooth.c",
-        "src/psnames/psmodule.c",
-        "src/psaux/afmparse.c",
-        "src/psaux/psauxmod.c",
-        "src/psaux/t1cmap.c",
-        "src/truetype/ttdriver.c",
-        "src/pshinter/pshalgo.c",
-        "src/cache/ftcbasic.c",
-        "src/cache/ftcsbits.c",
-        "src/cache/ftcimage.c",
-        "src/cache/ftcglyph.c",
-        "src/cache/ftccmap.c",
+        "src/sfnt/sfnt.c",
         "src/svg/ftsvg.c",
-        "src/raster/ftrend1.c",
-        "src/type42/t42drivr.c",
-        "src/truetype/ttdriver.c",
-        "src/sfnt/sfdriver.c",
-        "src/cff/cffdrivr.c",
-        "src/lzw/ftzopen.c",
-        "src/pshinter/pshmod.c",
-        "src/sfnt/pngshim.c",
-        "src/sfnt/sfobjs.c",
-        "src/sfnt/sfwoff.c",
-        "src/sfnt/sfwoff2.c",
-        "src/sfnt/ttbdf.c",
-        "src/sfnt/ttcolr.c",
-        "src/sfnt/ttcpal.c",
-        "src/sfnt/ttsvg.c",
-        "src/sfnt/ttgpos.c",
-        "src/sfnt/ttkern.c",
-        "src/sfnt/ttload.c",
-        "src/sfnt/ttsbit.c",
-        "src/sfnt/woff2tags.c",
-        "src/bdf/bdfdrivr.c",
-        "src/pfr/pfrdrivr.c",
-        "src/cid/cidriver.c",
-        "src/gxvalid/gxvmod.c",
-        "src/otvalid/otvmod.c",
-        "src/raster/ftrend1.c",
-        "src/cff/cffdrivr.c",
-        "src/cff/cffcmap.c",
-        "src/pfr/pfrcmap.c",
-        "src/pcf/pcfdrivr.c",
-        "src/sfnt/ttcmap.c",
-        "src/truetype/ttdriver.c",
-        "src/raster/ftraster.c",
-        "src/type1/t1driver.c",
-        "src/gxvalid/gxvfgen.c"
-      ],
-      sources: [
-        "src",
+        "src/truetype/truetype.c",
+        "src/truetype/ttinterp.c",
+        "src/cff/cff.c",
+        "src/cid/type1cid.c",
+        "src/type1/type1.c",
+        "src/type42/type42.c",
+        "src/bdf/bdf.c",
+        "src/pcf/pcf.c",
+        "src/pfr/pfr.c",
+        "src/winfonts/winfnt.c",
+        "src/smooth/smooth.c",
+        "src/raster/raster.c",
+        "src/sdf/sdf.c",
+        "src/autofit/autofit.c",
+        "src/cache/ftcache.c",
+        "src/cache/ftccache.c",
+        "src/cache/ftcmanag.c",
+        "src/cache/ftcmru.c",
         "src/gzip/ftgzip.c",
+        "src/lzw/ftlzw.c",
+        "src/bzip2/ftbzip2.c",
+        "src/gxvalid/gxvalid.c",
+        "src/otvalid/otvalid.c",
+        "src/psaux/psaux.c",
+        "src/pshinter/pshinter.c",
+        "src/psnames/psnames.c"
       ],
       publicHeadersPath: "include",
       cSettings: [
@@ -347,7 +229,7 @@ let package = Package(
       dependencies: [
         .target(name: "imgui_cxx"),
         .target(name: "imgui_extras"),
-        .target(name: "imgui_freetype")
+        .target(name: "imgui_freetype"),
       ],
       cxxSettings: [
         .define("IMGUI_ENABLE_FREETYPE", to: "1"),
@@ -373,7 +255,7 @@ let package = Package(
         .interoperabilityMode(.Cxx)
       ]
     ),
-  ] + Arch.addPlatformExamples(),
+  ] + Arch.addPlatformBackends(),
   cxxLanguageStandard: .cxx17
 )
 
@@ -383,8 +265,8 @@ enum Arch {
       "src/wl_init.c",
       "src/wl_window.c",
       "src/wl_monitor.c",
-      "src/glfw.rc.in",
       "src/CMakeLists.txt",
+      "src/glfw.rc.in",
       "src/mappings.h.in",
     ]
     #if !os(Windows)
@@ -419,7 +301,6 @@ enum Arch {
         "src/x11_init.c",
         "src/x11_monitor.c",
         "src/x11_window.c",
-        "src/posix_time.c",
         "src/glx_context.c",
         "src/linux_joystick.c",
       ]
@@ -431,6 +312,10 @@ enum Arch {
   static func addPlatformProducts() -> [Product] {
     #if os(macOS)
       [
+        .library(
+          name: "backend_opengl3",
+          targets: ["backend_opengl3"]
+        ),
         .library(
           name: "backend_metal",
           targets: ["backend_metal"]
@@ -444,16 +329,42 @@ enum Arch {
           targets: ["GLFWMetalApp"]
         )
       ]
-    #else
+    #elseif os(Windows)
       [
-        // todo.
+        .library(
+          name: "backend_opengl3",
+          targets: ["backend_opengl3"]
+        ),
+        .library(
+          name: "backend_win32",
+          targets: ["backend_win32"]
+        ),
       ]
+    #else
+    [
+      .library(
+        name: "backend_opengl3",
+        targets: ["backend_opengl3"]
+      ),
+    ]
     #endif
   }
 
-  static func addPlatformExamples() -> [Target] {
+  static func addPlatformBackends() -> [Target] {
     #if os(macOS)
       [
+        .target(
+          name: "backend_opengl3",
+          dependencies: [
+            .target(name: "ImGui")
+          ],
+          path: "imgui-cxx/backends",
+          sources: [
+            "imgui_impl_opengl3.cpp"
+          ],
+          publicHeadersPath: "."
+        ),
+
         .target(
           name: "backend_metal",
           dependencies: [
@@ -494,9 +405,45 @@ enum Arch {
           ]
         )
       ]
+    #elseif os(Windows)
+      [
+        .target(
+          name: "backend_opengl3",
+          dependencies: [
+            .target(name: "ImGui")
+          ],
+          path: "imgui-cxx/backends",
+          sources: [
+            "imgui_impl_opengl3.cpp"
+          ],
+          publicHeadersPath: "."
+        ),
+        
+        .target(
+          name: "backend_win32",
+          dependencies: [
+            .target(name: "ImGui")
+          ],
+          path: "imgui-cxx/backends",
+          sources: [
+            "imgui_impl_win32.cpp"
+          ],
+          publicHeadersPath: "."
+        ),
+      ]
     #else
       [
-        // todo.
+        .target(
+          name: "backend_opengl3",
+          dependencies: [
+            .target(name: "ImGui")
+          ],
+          path: "imgui-cxx/backends",
+          sources: [
+            "imgui_impl_opengl3.cpp"
+          ],
+          publicHeadersPath: "."
+        ),
       ]
     #endif
   }
