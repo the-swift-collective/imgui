@@ -58,6 +58,7 @@ let package = Package(
         "imgui_tables.cpp",
         "imgui_widgets.cpp",
         "imgui.cpp",
+        "misc/cpp/imgui_stdlib.cpp",
       ],
       publicHeadersPath: ".",
       cxxSettings: [
