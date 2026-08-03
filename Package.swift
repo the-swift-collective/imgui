@@ -42,6 +42,9 @@ let package = Package(
     .target(
       name: "imgui_cxx",
       path: "imgui-cxx",
+      exclude: [
+        "examples"
+      ],
       sources: [
         "imgui_demo.cpp",
         "imgui_draw.cpp",
@@ -290,7 +293,8 @@ let package = Package(
       ],
       path: "imgui-cxx",
       exclude: [
-        "misc/freetype/README.md"
+        "misc/freetype/README.md",
+        "examples"
       ],
       sources: [
         "misc/freetype"
