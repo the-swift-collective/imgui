@@ -12,18 +12,15 @@ public struct GLFWMetalApp
     // setup context.
 
     ImGui.CreateContext(nil)
-    var io = ImGui.GetIO().pointee
-    io.ConfigFlags |= Int32(ImGuiConfigFlags_NavEnableKeyboard.rawValue)
-    io.ConfigFlags |= Int32(ImGuiConfigFlags_NavEnableGamepad.rawValue)
+    let io = ImGui.GetIO()
+    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_NavEnableKeyboard.rawValue)
+    io.pointee.ConfigFlags |= Int32(ImGuiConfigFlags_NavEnableGamepad.rawValue)
+    io.pointee.DisplaySize.x = 800
+    io.pointee.DisplaySize.y = 600
 
-    // setup style & font.
+    // setup style.
 
     ImGui.StyleColorsDark(nil)
-
-    guard let ttfFile = Bundle.main.path(forResource: "fonts/default.ttf", ofType: nil)
-    else { fatalError("could not find default font.") }
-
-    io.Fonts.addFontFromFileTTF(atPath: ttfFile, fontSize: 16)
 
     // setup window, graphics context, & run event loop.
 

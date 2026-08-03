@@ -18,6 +18,10 @@ let package = Package(
       targets: ["imgui_cxx"]
     ),
     .library(
+      name: "imgui_extras",
+      targets: ["imgui_extras"]
+    ),
+    .library(
       name: "ImGui",
       targets: ["ImGui"]
     ),
@@ -53,6 +57,20 @@ let package = Package(
         "imgui.cpp",
       ],
       publicHeadersPath: ".",
+      cxxSettings: [
+        .define("IMGUI_ENABLE_FREETYPE", to: "1"),
+        .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
+        .define("_ALLOW_KEYWORD_MACROS", to: "1", .when(platforms: [.windows])),
+        .define("static_assert(_conditional, ...)", to: "", .when(platforms: [.windows])),
+      ]
+    ),
+    
+    .target(
+      name: "imgui_extras",
+      dependencies: [
+        .target(name: "imgui_cxx")
+      ],
+      path: "imgui-extras",
       cxxSettings: [
         .define("IMGUI_ENABLE_FREETYPE", to: "1"),
         .define("_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH", .when(platforms: [.windows])),
@@ -272,6 +290,7 @@ let package = Package(
       dependencies: [
         .target(name: "glfw"),
         .target(name: "imgui_cxx"),
+        .target(name: "imgui_extras"),
       ],
       path: "imgui-cxx/backends",
       sources: [
@@ -289,6 +308,7 @@ let package = Package(
       name: "imgui_freetype",
       dependencies: [
         .target(name: "imgui_cxx"),
+        .target(name: "imgui_extras"),
         .target(name: "freetype")
       ],
       path: "imgui-cxx",
@@ -312,6 +332,7 @@ let package = Package(
       name: "ImGui",
       dependencies: [
         .target(name: "imgui_cxx"),
+        .target(name: "imgui_extras"),
         .target(name: "imgui_freetype")
       ],
       cxxSettings: [
@@ -452,7 +473,7 @@ enum Arch {
             .target(name: "example_glfw_metal")
           ],
           resources: [
-            .copy("Resources/fonts")
+            .process("Resources")
           ],
           swiftSettings: [
             .interoperabilityMode(.Cxx)
