@@ -92,7 +92,7 @@ let package = Package(
       ],
       cxxSettings: [
         .headerSearchPath("."),
-        .define("_GLFW_COCOA", to: "1", .when(platforms: [.macOS, .iOS, .visionOS, .tvOS, .watchOS])),
+        .define("_GLFW_COCOA", to: "1", .when(platforms: [.macOS])),
         .define("_GLFW_X11", to: "1", .when(platforms: [.linux, .openbsd])),
         .define("_GLFW_OSMESA", to: "1", .when(platforms: [.android])),
         .define("_GLFW_WIN32", to: "1", .when(platforms: [.windows])),
